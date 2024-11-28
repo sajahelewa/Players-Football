@@ -7,7 +7,6 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-
 import com.example.playersfootball.data.Player;
 
 import java.util.List;
@@ -25,4 +24,7 @@ public interface PlayerDao {
 
     @Query("SELECT * FROM players WHERE teamId = :teamId")
     LiveData<List<Player>> getPlayersByTeam(int teamId);
+
+    @Query("SELECT * FROM players")
+    LiveData<List<Player>> getAllPlayers();
 }

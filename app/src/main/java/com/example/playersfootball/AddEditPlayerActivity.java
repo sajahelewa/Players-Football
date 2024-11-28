@@ -2,7 +2,6 @@ package com.example.playersfootball;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -23,6 +22,7 @@ public class AddEditPlayerActivity extends AppCompatActivity {
     private int playerId = -1;
     public static AppDatabase db;
     Button buttonSave;
+    private String origin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +44,10 @@ public class AddEditPlayerActivity extends AppCompatActivity {
         }
 
         teamId = intent.getIntExtra(EXTRA_TEAM_ID, -1);
+        origin = intent.getStringExtra("origin");
 
         buttonSave = findViewById(R.id.button_save);
-        buttonSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                savePlayer();
-            }
-        });
+        buttonSave.setOnClickListener(v -> savePlayer());
     }
 
     private void savePlayer() {
@@ -70,8 +66,13 @@ public class AddEditPlayerActivity extends AppCompatActivity {
             db.playerDao().insert(player);
         }
 
-        Intent intent = new Intent(AddEditPlayerActivity.this, PlayerActivity.class);
-        intent.putExtra(PlayerActivity.EXTRA_TEAM_ID, teamId);
+        Intent intent;
+        if ("PlayerActivity".equals(origin)) {
+            intent = new Intent(AddEditPlayerActivity.this, PlayerActivity.class);
+            intent.putExtra(PlayerActivity.EXTRA_TEAM_ID, teamId);
+        } else {
+            intent = new Intent(AddEditPlayerActivity.this, AllPlayerActivity.class);
+        }
         startActivity(intent);
         finish();
     }

@@ -4,7 +4,6 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
-
 import com.example.playersfootball.data.Player;
 
 import java.util.List;
@@ -12,11 +11,13 @@ import java.util.List;
 public class PlayerRepository {
     private PlayerDao playerDao;
     private LiveData<List<Player>> playersByTeam;
+    private LiveData<List<Player>> allPlayers;
 
     public PlayerRepository(Application application, int teamId) {
         AppDatabase database = AppDatabase.getInstance(application);
         playerDao = database.playerDao();
         playersByTeam = playerDao.getPlayersByTeam(teamId);
+        allPlayers = playerDao.getAllPlayers();
     }
 
     public void insert(Player player) {
@@ -34,5 +35,8 @@ public class PlayerRepository {
     public LiveData<List<Player>> getPlayersByTeam() {
         return playersByTeam;
     }
-}
 
+    public LiveData<List<Player>> getAllPlayers() {
+        return allPlayers;
+    }
+}

@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-
 import com.example.playersfootball.data.Player;
 
 import java.util.List;
@@ -14,11 +13,13 @@ import java.util.List;
 public class PlayerViewModel extends AndroidViewModel {
     private PlayerRepository repository;
     private LiveData<List<Player>> playersByTeam;
+    private LiveData<List<Player>> allPlayers;
 
     public PlayerViewModel(@NonNull Application application, int teamId) {
         super(application);
         repository = new PlayerRepository(application, teamId);
         playersByTeam = repository.getPlayersByTeam();
+        allPlayers = repository.getAllPlayers();
     }
 
     public void insert(Player player) {
@@ -36,5 +37,8 @@ public class PlayerViewModel extends AndroidViewModel {
     public LiveData<List<Player>> getPlayersByTeam() {
         return playersByTeam;
     }
-}
 
+    public LiveData<List<Player>> getAllPlayers() {
+        return allPlayers;
+    }
+}

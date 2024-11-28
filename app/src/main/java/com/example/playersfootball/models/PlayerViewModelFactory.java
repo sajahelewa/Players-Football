@@ -7,21 +7,20 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 public class PlayerViewModelFactory implements ViewModelProvider.Factory {
-    private Application application;
-    private int teamId;
+    private Application mApplication;
+    private int mTeamId;
 
     public PlayerViewModelFactory(Application application, int teamId) {
-        this.application = application;
-        this.teamId = teamId;
+        mApplication = application;
+        mTeamId = teamId;
     }
 
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass.isAssignableFrom(PlayerViewModel.class)) {
-            return (T) new PlayerViewModel(application, teamId);
+            return (T) new PlayerViewModel(mApplication, mTeamId);
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }
 }
-
